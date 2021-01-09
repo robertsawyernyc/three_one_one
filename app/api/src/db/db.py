@@ -2,6 +2,7 @@ from flask import current_app
 from flask import g #global data within this context
 import psycopg2
 conn_dev = psycopg2.connect(database = 'three_one_one_development', user = 'robertsawyer')
+cursor = conn_dev.cursor()
 
 def get_db():
     if "db" not in g:

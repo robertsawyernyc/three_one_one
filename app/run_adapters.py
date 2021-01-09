@@ -3,6 +3,7 @@ import api.src.db as db
 import api.src.adapters as adapters
 import psycopg2
 
+#run Client and Builder (from incident_builder) to retrieve and configure data
 class RequestAndBuild:
     def __init__(self):
         self.client = adapters.Client()
@@ -12,10 +13,13 @@ class RequestAndBuild:
         self.cursor = self.conn.cursor()
 
     def run(self, search_params):
-        incidents = self.client.request_incidents(search_params)
+        incidents = self.client.request_incidents(search_params) #request_incidents from Client
         incident_objs = []
-        for incidents in incidents:
-            incident_details = self.client.request_incident()
+        for incident in incidents:
+            incident_details = self.client.request_incidents()
+            incident_obj = self.builder.run(incident_details, self.conn, self.cursor)
+            incident_objs.append(incident_obj)
+        return incident_objs
 
             
     # def run(self, search_params = {'ll': "40.7,-74", "query": "tacos"}):

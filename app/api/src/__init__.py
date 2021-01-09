@@ -16,7 +16,7 @@ def create_app(database = 'three_one_one_development', testing = False, debug = 
 
     @app.route('/')
     def root_url():
-        return 'Welcome to NYC 311 Service Requests'
+        return 'Welcome to NYC 311 Service Requests API'
 
     @app.route('/incidents')
     def incidents():
@@ -26,6 +26,15 @@ def create_app(database = 'three_one_one_development', testing = False, debug = 
         incidents = db.find_all(models.Incident, cursor)
         incident_dicts = [incident.__dict__ for incident in incidents]
         return json.dumps(incident_dicts, default = str)
+
+    @app.route('/agencies')
+    def agencies():
+        conn = db.get_db()
+        cursor = conn.cursor()
+
+        agency_names = models.Complaint.get_agency_names()
+        agency_dicts = [get_agency(agency_name) for agency_name in agency_names]
+        return json.dumps(agency_dicts, default = str)
 
     @app.route('/incidents/search')
     def search_incidents():
@@ -40,10 +49,9 @@ def create_app(database = 'three_one_one_development', testing = False, debug = 
     @app.route('/incidents/<id>')
     def incident(id):
         conn = db.get_db()
+
         cursor = conn.cursor()
         incident = db.find(models.Incident, id, cursor)
-
         return json.dumps(incident.__dict__, default = str)
-
 
     return app 
