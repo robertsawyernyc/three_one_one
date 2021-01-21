@@ -9,7 +9,7 @@ from api.src.models import *
 cursor = conn_dev.cursor()
 drop_all_tables(conn_dev, cursor)
 
-#seed data: complaint = save(Complaint(), conn_dev, cursor)
+
 complaint_one = save(Complaint(agency = 'NYPD', agency_name = 'New York Police Department', 
                         complaint_type = 'noise - residential', descriptor = 'banging/pounding'), conn_dev, cursor)
 complaint_two = save(Complaint(agency = 'DOHMH', agency_name = 'Department of Health and Mental Hygiene',

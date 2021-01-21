@@ -13,6 +13,7 @@ def get_incidents():
     response = requests.get(API_URL)
     return response.json()
 
+
 #conneting to backend api localhost:5000/incidents
 def get_agencies():
     response = requests.get(API_URL_AGENCIES)

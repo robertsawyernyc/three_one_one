@@ -1,7 +1,7 @@
-from api.src.db import conn_dev #import connection
+from api.src.db import conn_dev 
 from api.src.models import *
 from api.src.adapters import *
-cursor = conn_dev.cursor() # create the cursor
+cursor = conn_dev.cursor() 
 
 two_incidents_json = [{'unique_key': '42033602',
   'created_date': '2019-03-24T00:00:00.000',

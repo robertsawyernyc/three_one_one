@@ -32,7 +32,7 @@ class Complaint:
             complaint = self.find_by_complaint_type(name, cursor)
         return complaint 
 
-    #calculates complaint totals gourped by each complaint type
+    #calculates complaint totals gourped by complaint type
     def total_by_complaint_type(self, cursor):
         complaint_type_query = """SELECT complaint_type, COUNT(*) FROM complaints
         JOIN incidents ON complaints.id = incidents.complaint_id
@@ -50,7 +50,7 @@ class Complaint:
         record = cursor.fetchall()
         return record
 
-    #calculates total by complaint type, for NYPD -> will return {'name': 'NYPD', 'complaint_total': 500}
+    #calculates total by complaint type, example: NYPD -> will return {'name': 'NYPD', 'complaint_total': 500}
     @classmethod
     def complaint_type_total_by_agency(agency_name):
         complaint_total_query = """SELECT complaint_type, COUNT(*) FROM complaints

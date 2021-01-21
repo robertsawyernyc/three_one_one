@@ -75,13 +75,4 @@ class ComplaintBuilder:
             type_of_complaints.append(named_complaint)
         return type_of_complaints
         
-
-
-# python3 -i console.py
-# >>> builder = IncidentBuiler()
-# Traceback (most recent call last):
-#   File "<stdin>", line 1, in <module>
-# NameError: name 'IncidentBuiler' is not defined
-# >>> builder = IncidentBuilder()
-# >>> builder.select_attributes(incident_json)
-# {'unique_key': '42033602', 'created_date': '2019-03-24T00:00:00.000', 'closed_date': '2019-03-27T00:00:00.000'}          
+         
