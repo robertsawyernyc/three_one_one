@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS locations (
     id serial PRIMARY KEY,
     location_type VARCHAR(255),
     incident_address VARCHAR(255),
-    incident_zip INTEGER,
+    zip_code INTEGER,
     city VARCHAR(255),
     borough VARCHAR(255),
     latitude DECIMAL,

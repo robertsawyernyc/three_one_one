@@ -41,7 +41,7 @@ class Complaint:
         record = cursor.fetchall()
         return record
 
-    #calculates total complaints handled by each agency
+    #calculates total complaints managed by each agency
     def total_complaints_by_agency(self, cursor):
         agency_query = """SELECT agency_name, COUNT(*) FROM complaints 
         JOIN incidents ON complaints.id = incidents.complaint_id 
@@ -58,3 +58,11 @@ class Complaint:
         cursor.execute(complaint_total_query)
         record = cursor.fetchall()
         return record
+
+    # @classmethod 
+    # def agency_name(self, cursor):
+    #     agency_name_query = """SELECT agency_name from complaints
+    #     WHERE agency_name = %s"""
+    #     cursor.execute(agency_name_query)
+    #     record = cursor.fetchall()
+    #     return record

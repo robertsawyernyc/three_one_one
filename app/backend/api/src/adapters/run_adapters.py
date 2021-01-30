@@ -3,7 +3,7 @@ import api.src.db as db
 import api.src.adapters as adapters
 import psycopg2
 
-#run Client and Builder (from incident_builder) to retrieve and configure data
+
 class RequestAndBuild:
     def __init__(self):
         self.client = adapters.Client()

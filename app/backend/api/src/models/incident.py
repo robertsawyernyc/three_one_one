@@ -3,7 +3,7 @@ import api.src.models as models
 
 class Incident:
     __table__ = 'incidents'
-    columns = ['id', 'open_data_id', 'date_time', 
+    columns = ['id', 'open_data_id', 'created_date', 'closed_date', 
     'location_id', 'complaint_id']
 
     def __init__(self, **kwargs):
