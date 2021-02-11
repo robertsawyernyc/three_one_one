@@ -13,7 +13,7 @@ class Location:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-
+    @classmethod
     def total_by_borough(self, cursor):
         borough_query = """SELECT borough, COUNT(*) FROM locations 
         JOIN incidents ON locations.id = incidents.location_id
@@ -21,7 +21,8 @@ class Location:
         cursor.execute(borough_query)
         record = cursor.fetchall()
         return record
-        
+
+    @classmethod    
     def total_by_setting(self, cursor):
         setting_query = """SELECT setting, COUNT(*) FROM locations 
         JOIN incidents ON location.id = incidents.location_id
@@ -30,6 +31,7 @@ class Location:
         record = cursor.fetchall()
         return record
 
+    @classmethod
     def total_by_zip_code(self, cursor):
         zip_code_query = """SELECT zip_code, COUNT(*) FROM locations
         JOIN incidents ON location.id = incidents.location_id

@@ -17,22 +17,23 @@ class Complaint:
     def find_by_complaint_type(self, name, cursor):
         complaint_query = """SELECT * FROM complaints 
         WHERE complaint_type = %s """
-        cursor.execute(complaint_query, ('complaint_type',))
-        complaint_record =  cursor.fetchone()
-        complaint = db.build_from_record(self, complaint_record)
-        return complaint 
+        cursor.execute(complaint_query, (name,))
+        complaint_records =  cursor.fetchall()
+        complaints = db.build_from_records(self, complaint_records)
+        return complaints 
 
     @classmethod
     def find_or_create_complaint_type(self, name, conn, cursor):
-        complaint = self.find_by_complaint_type(name, cursor)
-        if not complaint:
+        complaints = self.find_by_complaint_type(name, cursor)
+        if not complaints:
             new_complaint = models.Complaint()
-            new_complaint.name = name
+            new_complaint.complaint_type = name
             db.save(new_complaint, conn, cursor)
             complaint = self.find_by_complaint_type(name, cursor)
         return complaint 
 
     #calculates complaint totals gourped by complaint type
+    @classmethod
     def total_by_complaint_type(self, cursor):
         complaint_type_query = """SELECT complaint_type, COUNT(*) FROM complaints
         JOIN incidents ON complaints.id = incidents.complaint_id
@@ -42,6 +43,7 @@ class Complaint:
         return record
 
     #calculates total complaints managed by each agency
+    @classmethod
     def total_complaints_by_agency(self, cursor):
         agency_query = """SELECT agency_name, COUNT(*) FROM complaints 
         JOIN incidents ON complaints.id = incidents.complaint_id 
@@ -58,11 +60,3 @@ class Complaint:
         cursor.execute(complaint_total_query)
         record = cursor.fetchall()
         return record
-
-    # @classmethod 
-    # def agency_name(self, cursor):
-    #     agency_name_query = """SELECT agency_name from complaints
-    #     WHERE agency_name = %s"""
-    #     cursor.execute(agency_name_query)
-    #     record = cursor.fetchall()
-    #     return record

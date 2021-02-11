@@ -71,7 +71,7 @@ class ComplaintBuilder:
     def find_or_create_complaint_types(self, incident_details, conn, cursor):
         type_of_complaints =[]
         for complaint_type in incident_details:
-            named_complaint = db.total_by_complaint_type(models.Complaint, conn, cursor
+            named_complaint = db.total_by_complaint_type(models.Complaint, conn, cursor)
             type_of_complaints.append(named_complaint)
         return type_of_complaints
         

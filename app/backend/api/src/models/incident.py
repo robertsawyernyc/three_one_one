@@ -26,8 +26,8 @@ class Incident:
         incident_query = """SELECT COUNT(*) FROM incidents 
         WHERE complaint.id = complaint_id"""
         cursor.execute(incident_query)
-        record = cursor.fetchall()
-        return record
+        records = cursor.fetchall()
+        return records
 
 
 

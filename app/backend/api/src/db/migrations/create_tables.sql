@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS complaints (
 
 CREATE TABLE IF NOT EXISTS locations (
     id serial PRIMARY KEY,
-    location_type VARCHAR(255),
+    setting VARCHAR(255),
     incident_address VARCHAR(255),
     zip_code INTEGER,
     city VARCHAR(255),
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS locations (
 
 CREATE TABLE IF NOT EXISTS incidents (
     id serial PRIMARY KEY,
-    unique_key INTEGER UNIQUE,
+    open_data_id INTEGER  UNIQUE,
     created_date TIMESTAMP,
     closed_date TIMESTAMP,
     location_id INTEGER,
