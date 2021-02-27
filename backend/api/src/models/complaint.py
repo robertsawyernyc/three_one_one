@@ -62,8 +62,11 @@ class Complaint:
         record = cursor.fetchall()
         return record
 
-    def get_agency_names(self, incident_details, conn, cursor):
-        agency_names = []
-        agency_name = [agency_name['agency_name'] for agency_name in incident_details]
-        agency_names = agency_names.append(agency_name, conn, cursor)
-        return agency_names
+    # @classmethod
+    # def get_agency_name(self, name, cursor):
+    #     agency_name_query = """SELECT * FROM complaits
+    #     WHERE agency_name = %s"""
+    #     cursor.execute(agency_name_query, (name,))
+    #     agency_name_record = cursory.fetchone()
+    #     agency_name = db.build_from_records(self, agency_name_record)
+    #     return agency_name

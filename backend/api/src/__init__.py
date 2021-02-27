@@ -26,31 +26,21 @@ def create_app(database = 'three_one_one_development', testing = False, debug = 
         incident_dicts = [incident.__dict__ for incident in incidents]
         return json.dumps(incident_dicts, default = str)
 
-    @app.route('/agencies')
-    def agencies():
-        conn = db.get_db()
-        cursor = conn.cursor()
+    # @app.route('/agencies')
+    # def agencies():
+    #     conn = db.get_db()
+    #     cursor = conn.cursor()
 
-        agency_names = models.Complaint.get_agency_names() # list of strings ['NYPD', 'FDNY', 'DSNY']
-        agency_dicts = [models.Complaint.complaint_total_for_agency(agency_name) for agency_name in agency_names]
-        return json.dumps(agency_dicts, default = str)
-
-    @app.route('/incidents/search') 
-    def search_incidents():
-        conn = db.get_db()
-        cursor = conn.cursor()
-
-        params = dict(request.args)
-        incidents = models.Incident.search(params, cursor)
-        incident_dicts = [incident.to_json(cursor) for incident in incidents]
-        return json.dumps(incident_dicts, default = str)
+    #     agency_names = models.Complaint.get_agency_name() # list of strings ['NYPD', 'FDNY', 'DSNY']
+    #     agency_dicts = [models.Complaint.get_agency_name(agency_name) for agency_name in incident_details]
+    #     return json.dumps(agency_dicts, default = str)
 
     @app.route('/incidents/<id>') 
-    def incident(open_data_id):
+    def incident(id):
         conn = db.get_db()
 
         cursor = conn.cursor()
-        incident = db.find(models.Incident, open_data_id, cursor)
+        incident = db.find(models.Incident, id, cursor)
         return json.dumps(incident.__dict__, default = str)
 
     return app 

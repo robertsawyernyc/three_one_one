@@ -1,8 +1,8 @@
 import requests
 
 class Client:
-    APP_TOKEN = 'MBBwwZPyrrn0xWRNWk4X8qRWK'
-    ROOT_URL = "https://data.cityofnewyork.us/resource/erm2-nwe9.json"
+    APP_TOKEN = APPTOKEN
+    ROOT_URL = ROOTURL
     
     def auth_params(self):
         return {'$$app_token':self.APP_TOKEN}

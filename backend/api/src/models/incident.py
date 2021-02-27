@@ -23,6 +23,7 @@ class Incident:
         if record:
             return db.build_from_record(models.Incident, record)
 
+    @classmethod
     def total_incidents(self, cursor):
         incident_query = """SELECT COUNT(*) FROM incidents 
         WHERE complaint.id = complaint_id"""
