@@ -3,7 +3,7 @@ import simplejson as json
 import api.src.models as models
 import api.src.db as db
 
-#sets default args for running the app
+# sets default args for running the app
 def create_app(database = 'three_one_one_development', testing = False, debug = True):
     """Create and configure an instance of the Flask application."""
     app = Flask(__name__)
@@ -31,7 +31,7 @@ def create_app(database = 'three_one_one_development', testing = False, debug = 
         conn = db.get_db()
         cursor = conn.cursor()
 
-        agency_names = models.Complaint.get_agency_names() #list of strings ['NYPD', 'FDNY', 'DSNY']
+        agency_names = models.Complaint.get_agency_names() # list of strings ['NYPD', 'FDNY', 'DSNY']
         agency_dicts = [models.Complaint.complaint_total_for_agency(agency_name) for agency_name in agency_names]
         return json.dumps(agency_dicts, default = str)
 
