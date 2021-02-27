@@ -6,8 +6,8 @@ DB_NAME = os.getenv("DB_NAME")
 DB_HOST = os.getenv("DB_HOST")
 DB_USER = os.getenv("DB_USER")
 DB_PASSWORD = os.getenv("DB_PASSWORD")
-ROOT_URL = os.getenv("ROOTURL")
-APP_TOKEN = os.getenv("APPTOKEN")
+ROOT_URL = os.getenv("ROOT_URL")
+APP_TOKEN = os.getenv("APP_TOKEN")
 
 
 # DB_NAME=three_one_one_development

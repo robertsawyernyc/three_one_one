@@ -1,8 +1,9 @@
 import requests
+from settings import APP_TOKEN, ROOT_URL
 
 class Client:
-    APP_TOKEN = APPTOKEN
-    ROOT_URL = ROOTURL
+    APP_TOKEN = APP_TOKEN
+    ROOT_URL = ROOT_URL
     
     def auth_params(self):
         return {'$$app_token':self.APP_TOKEN}

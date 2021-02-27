@@ -9,13 +9,13 @@ cli = FlaskGroup(create_app=create_app)
 
 
 @cli.command('build_incidents')
-@click.argument('ll')
-@click.argument('complaint')
-def build_incidents(ll, complaint):
-    # example "40.7,-74", "query": "rodent"
+@click.argument('begin_date')
+@click.argument('end_date')
+@click.argument('limit')
+def build_incidents(begin_date, end_date, limit):
     runner = RequestAndBuild()
-    runner.run(ll, complaint)
-    print(ll, complaint)
+    runner.run(begin_date, end_date, limit)
+    print(begin_date, end_date, limit)
 
 
 if __name__ == "__main__":

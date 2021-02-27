@@ -19,7 +19,7 @@ class Builder:
 class IncidentBuilder:
     attributes = ['open_data_id', 'created_date', 'closed_date'] 
     
-    def select_attributes(self, incident_details):
+    def select_attributes(self, incident_details): 
         open_data_id = incident_details['unique_key']
         created_date = incident_details['created_date']
         closed_date = incident_details['closed_date']
