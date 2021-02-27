@@ -1,5 +1,5 @@
 from flask import current_app
-from flask import g #global data within this context
+from flask import g # global data
 import psycopg2
 conn_dev = psycopg2.connect(database = 'three_one_one_development', user = 'robertsawyer')
 cursor = conn_dev.cursor()
@@ -18,13 +18,13 @@ def close_db(e=None):
 def build_from_record(Class, record):
     if not record: return None
     attr = dict(zip(Class.columns, record))
-    obj = Class() #creating an instance of each Class
-    obj.__dict__ = attr #setting properties from line 19
+    obj = Class() # creating an instance of each Class
+    obj.__dict__ = attr # setting properties from line 19
     return obj
 
 def build_from_records(Class, records):
     return [build_from_record(Class, record) for record in records]
-    #uses build_from_record method from above to build all records
+    # uses build_from_record method from above to build all records
 
 def find_all(Class, cursor):
     sql_str = f"SELECT * FROM {Class.__table__}"
@@ -59,17 +59,17 @@ def keys(obj):
 def drop_records(cursor, conn, table_name):
     cursor.execute(f"DELETE FROM {table_name};")
     conn.commit()
-    #for tests
+    # for tests
 
 def drop_tables(table_names, cursor, conn):
     for table_name in table_names:
         drop_records(cursor, conn, table_name)
-    #for tests
+    # for tests
 
 def drop_all_tables(conn, cursor):
     table_names = ['incidents', 'complaints', 'locations']
     drop_tables(table_names, cursor, conn)
-    #for tests
+    # for tests
 
 def find_by_name(Class, name, cursor):
     query = f"""SELECT * FROM {Class.__table__} WHERE name = %s """
