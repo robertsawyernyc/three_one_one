@@ -13,9 +13,10 @@ class RequestAndBuild:
         self.cursor = self.conn.cursor()
 
     def run(self, search_params):
-        incidents = self.client.request_incidents(search_params) #request_incidents from Client
+        incidents = self.client.request_incidents(search_params) #hit api and retrieves json files
+        open_data_ids = [incident['open_data_id'] for incident in incidents]
         incident_objs = []
-        for incident in incidents:
+        for open_data_id in open_data_ids:
             incident_details = self.client.request_incidents()
             incident_obj = self.builder.run(incident_details, self.conn, self.cursor)
             incident_objs.append(incident_obj)

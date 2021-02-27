@@ -29,8 +29,8 @@ class IncidentBuilder:
         open_data_id = selected['unique_key']
         incident = models.Incident.find_by_open_data_id(open_data_id, cursor)
         if incident:
-            incident_details.exists = True
-            return incident_details
+            incident.exists = True
+            return incident
         else:
             incident_details = db.save(models.Incident(**selected), conn, cursor)
             incident.exists = False

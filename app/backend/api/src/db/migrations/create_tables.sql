@@ -1,7 +1,6 @@
+DROP TABLE IF EXISTS complaints CASCADE;
+DROP TABLE IF EXISTS locations CASCADE;
 DROP TABLE IF EXISTS incidents;
-DROP TABLE IF EXISTS complaints;
-DROP TABLE IF EXISTS locations;
-
 
 CREATE TABLE IF NOT EXISTS complaints (
     id serial PRIMARY KEY,

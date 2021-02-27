@@ -19,25 +19,25 @@ class Location:
         JOIN incidents ON locations.id = incidents.location_id
         GROUP BY borough"""
         cursor.execute(borough_query)
-        record = cursor.fetchall()
-        return record
+        records = cursor.fetchall()
+        return records
 
     @classmethod    
     def total_by_setting(self, cursor):
         setting_query = """SELECT setting, COUNT(*) FROM locations 
-        JOIN incidents ON location.id = incidents.location_id
+        JOIN incidents ON locations.id = incidents.location_id
         GROUP BY setting"""
         cursor.execute(setting_query)
-        record = cursor.fetchall()
-        return record
+        records = cursor.fetchall()
+        return records
 
     @classmethod
     def total_by_zip_code(self, cursor):
         zip_code_query = """SELECT zip_code, COUNT(*) FROM locations
-        JOIN incidents ON location.id = incidents.location_id
+        JOIN incidents ON locations.id = incidents.location_id
         GROUP BY zip_code"""
         cursor.execute(zip_code_query)
-        record = cursor.fetchall()
-        return record 
+        records = cursor.fetchall()
+        return records
 
 

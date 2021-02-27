@@ -15,12 +15,13 @@ class Incident:
 
 
     @classmethod
-    def find_by_open_data_id(self, cursor):
+    def find_by_open_data_id(self, open_data_id, cursor):
         open_data_id_query = """SELECT * FROM incidents 
         WHERE open_data_id = %s"""
-        cursor.execute(open_data_id_query, ('open_data_id',))
+        cursor.execute(open_data_id_query, (open_data_id,))
         record =  cursor.fetchone()
-        return db.build_from_record(models.Incident, record)
+        if record:
+            return db.build_from_record(models.Incident, record)
 
     def total_incidents(self, cursor):
         incident_query = """SELECT COUNT(*) FROM incidents 

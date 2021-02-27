@@ -16,7 +16,7 @@ class Complaint:
     @classmethod
     def find_by_complaint_type(self, name, cursor):
         complaint_query = """SELECT * FROM complaints 
-        WHERE complaint_type = %s """
+        WHERE complaint_type = %s"""
         cursor.execute(complaint_query, (name,))
         complaint_records =  cursor.fetchall()
         complaints = db.build_from_records(self, complaint_records)
@@ -54,9 +54,10 @@ class Complaint:
 
     #calculates total by complaint type, example: NYPD -> will return {'name': 'NYPD', 'complaint_total': 500}
     @classmethod
-    def complaint_type_total_by_agency(agency_name):
-        complaint_total_query = """SELECT complaint_type, COUNT(*) FROM complaints
-        WHERE agency_name = %s"""
-        cursor.execute(complaint_total_query)
+    def complaint_type_total_by_agency(self, agency_name, cursor):
+        complaint_total_query = """SELECT complaint_type, COUNT(*) FROM complaints 
+        JOIN incidents ON complaints.id = incidents.complaint_id
+        GROUP BY (complaint_type, agency_name) HAVING agency_name = %s"""
+        cursor.execute(complaint_total_query,(agency_name,))
         record = cursor.fetchall()
         return record
