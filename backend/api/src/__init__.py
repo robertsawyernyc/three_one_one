@@ -46,11 +46,11 @@ def create_app(database = 'three_one_one_development', testing = False, debug = 
         return json.dumps(incident_dicts, default = str)
 
     @app.route('/incidents/<id>') 
-    def incident(id):
+    def incident(open_data_id):
         conn = db.get_db()
 
         cursor = conn.cursor()
-        incident = db.find(models.Incident, id, cursor)
+        incident = db.find(models.Incident, open_data_id, cursor)
         return json.dumps(incident.__dict__, default = str)
 
     return app 

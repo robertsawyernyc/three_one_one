@@ -23,7 +23,7 @@ class IncidentBuilder:
         open_data_id = incident_details['unique_key']
         created_date = incident_details['created_date']
         closed_date = incident_details['closed_date']
-        return dict(zip(self.attributes, [open_data_id, date_time]))
+        return dict(zip(self.attributes, [open_data_id, created_date, closed_date]))
 
     def run(self, incident_details, conn, cursor):
         selected = self.select_attributes(incident_details)

@@ -61,3 +61,9 @@ class Complaint:
         cursor.execute(complaint_total_query,(agency_name,))
         record = cursor.fetchall()
         return record
+
+    def get_agency_names(self, incident_details, conn, cursor):
+        agency_names = []
+        agency_name = [agency_name['agency_name'] for agency_name in incident_details]
+        agency_names = agency_names.append(agency_name, conn, cursor)
+        return agency_names
