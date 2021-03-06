@@ -2,10 +2,6 @@ import psycopg2
 from api.src.db import *
 from api.src.models import *
 
-# from incident import Incident
-# from complaint import Complaint
-# from location import Location 
-
 cursor = conn_dev.cursor()
 drop_all_tables(conn_dev, cursor)
 
