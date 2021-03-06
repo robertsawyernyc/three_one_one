@@ -9,13 +9,14 @@ from api.src.models import *
 cursor = conn_dev.cursor()
 drop_all_tables(conn_dev, cursor)
 
+agency_one = save(Agency(agency = 'NYPD', agency_name = 'New York Police Department'), conn_dev, cursor)
+agency_two = save(Agency(agency = 'DOHMH', agency_name = 'Department of Health and Mental Hygiene'), conn_dev, cursor)
+agency_three = save(Agency(agency = 'DSNY', agency_name = 'Department of Sanitation'), conn_dev, cursor)
 
-complaint_one = save(Complaint(agency = 'NYPD', agency_name = 'New York Police Department', 
-                        complaint_type = 'noise - residential', descriptor = 'banging/pounding'), conn_dev, cursor)
-complaint_two = save(Complaint(agency = 'DOHMH', agency_name = 'Department of Health and Mental Hygiene',
-                        complaint_type = 'food poisoning', descriptor = '3 or more'), conn_dev, cursor)
-complaint_three = save(Complaint(agency = 'DSNY', agency_name = 'Department of Sanitation', 
-                        complaint_type = 'graffiti', descriptor = 'graffiti'), conn_dev, cursor)
+
+complaint_one = save(Complaint(complaint_type = 'noise - residential', descriptor = 'banging/pounding', agency_id = agency_one.id), conn_dev, cursor)
+complaint_two = save(Complaint(complaint_type = 'food poisoning', descriptor = '3 or more', agency_id = agency_two.id), conn_dev, cursor)
+complaint_three = save(Complaint(complaint_type = 'graffiti', descriptor = 'graffiti', agency_id = agency_three.id), conn_dev, cursor)
 
 
 location_one = save(Location(setting = 'street/sidewalk', zip_code = 11435, incident_address = '123 main street', city = 'jamaica',
@@ -29,3 +30,4 @@ location_three = save(Location(setting = 'residentail building/house', zip_code 
 incident_one = save(Incident(open_data_id = '123456', complaint_id = complaint_one.id, location_id = location_one.id), conn_dev, cursor)
 incident_two = save(Incident(open_data_id = '987654', complaint_id = complaint_two.id, location_id = location_two.id), conn_dev, cursor)
 incident_three = save(Incident(open_data_id = '213243', complaint_id = complaint_two.id, location_id = location_three.id), conn_dev, cursor)
+

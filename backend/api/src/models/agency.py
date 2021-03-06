@@ -12,6 +12,13 @@ class Agency:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
+    def complaints(self, cursor):
+        agency_query = """SELECT * FROM complaints WHERE agency_id = %s"""
+        cursor.execute(agency_query,(self.id,))
+        records = cursor.fetchall()
+        complaints_objs = db.build_from_records(models.Complaint, records)
+        return complaints_objs
+
     #calculates total complaints managed by each agency
     @classmethod
     def total_complaints_by_agency(self, cursor):
@@ -22,7 +29,7 @@ class Agency:
         record = cursor.fetchall()
         return record
 
-    #calculates total by complaint type, example: NYPD -> will return {'name': 'NYPD', 'complaint_total': 500}
+    #calculates total by complaint type
     @classmethod
     def complaint_type_total_by_agency(self, agency_name, cursor):
         complaint_total_query = """SELECT complaint_type, COUNT(*) FROM complaints 
@@ -34,9 +41,15 @@ class Agency:
 
     @classmethod
     def get_agency_name(self, name, cursor):
-        agency_name_query = """SELECT * FROM complaits
-        WHERE agency_name = %s"""
+        agency_name_query = """SELECT * FROM agencies
+        WHERE agency = %s"""
         cursor.execute(agency_name_query, (name,))
-        agency_name_record = cursory.fetchone()
-        agency_name = db.build_from_records(self, agency_name_record)
+        agency_name_record = cursor.fetchone()
+        agency_name = db.build_from_record(self, agency_name_record)
         return agency_name
+
+#  id | agency |               agency_name               
+# ----+--------+-----------------------------------------
+#   1 | NYPD   | New York Police Department
+#   2 | DOHMH  | Department of Health and Mental Hygiene
+#   3 | DSNY   | Department of Sanitation

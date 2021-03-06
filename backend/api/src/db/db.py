@@ -67,7 +67,7 @@ def drop_tables(table_names, cursor, conn):
     # for tests
 
 def drop_all_tables(conn, cursor):
-    table_names = ['incidents', 'complaints', 'locations']
+    table_names = ['incidents', 'complaints', 'locations', 'agencies']
     drop_tables(table_names, cursor, conn)
     # for tests
 
