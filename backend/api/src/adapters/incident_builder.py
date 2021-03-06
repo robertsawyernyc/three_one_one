@@ -9,11 +9,12 @@ class Builder:
         incident = IncidentBuilder().run(incident_details, conn, cursor)
         if incident.exists:
             return {'incident': incident, 'location': incident.location(cursor), 
-                    'complaint': incident.complaint(cursor)}
+                    'complaint': incident.complaint(cursor), 'agency' : incident.agency(cursor)}
         else:
             location = LocationBuilder().run(incident_details, conn, cursor)
             complaint = ComplaintBuilder().run(incident_details, conn, cursor)
-            return {'incident': incident, 'location': location, 'complaint': complaint}
+            agency = AgencyBuilder().run(incident_details, conn, cursor)
+            return {'incident': incident, 'location': location, 'complaint': complaint, 'agency': agency}
 
 
 class IncidentBuilder:
@@ -76,4 +77,16 @@ class ComplaintBuilder:
             type_of_complaints.append(named_complaint)
         return type_of_complaints
         
-         
+class AgencyBuilder:
+    attributes = ['agency', 'agency_name']
+
+    def select_attributes(self, incident_details):
+        agency = incident_details['agency']
+        agency_name = incident_details['agency_name']
+        return dict(zip(self.attributes, [agency, agency_name]))
+
+    def run(self, incident_details, conn, cursor):
+        location_attributes = self.select_attributes(incident_details)
+        location = models.Agency(**location_attributes)
+        location = db.save(agency, conn, cursor)
+        return agency 

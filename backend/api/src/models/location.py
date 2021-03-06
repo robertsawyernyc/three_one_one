@@ -3,7 +3,7 @@ import api.src.models as models
 
 class Location:
     __table__ = 'locations'
-    columns = ['id', 'setting', 'zip_code', 'incident_address',
+    columns = ['id', 'setting', 'zip_code', 'location_address',
             'city', 'borough', 'latitude', 'longitude']
 
     def __init__(self, **kwargs):

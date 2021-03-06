@@ -1,19 +1,29 @@
+DROP TABLE IF EXISTS agencies CASCADE;
 DROP TABLE IF EXISTS complaints CASCADE;
 DROP TABLE IF EXISTS locations CASCADE;
-DROP TABLE IF EXISTS incidents;
+DROP TABLE IF EXISTS incidents CASCADE;
+
+
+CREATE TABLE IF NOT EXISTS agencies (
+    id serial PRIMARY KEY,
+    agency VARCHAR (225),
+    agency_name VARCHAR (255)
+);
 
 CREATE TABLE IF NOT EXISTS complaints (
     id serial PRIMARY KEY,
-    agency VARCHAR(255),
-    agency_name VARCHAR(255),
     complaint_type VARCHAR(255),
-    descriptor VARCHAR(255)
+    descriptor VARCHAR(255),
+    agency_id INTEGER,
+    CONSTRAINT fk_agency
+        FOREIGN KEY (agency_id)
+            REFERENCES agencies (id)
 );
 
 CREATE TABLE IF NOT EXISTS locations (
     id serial PRIMARY KEY,
     setting VARCHAR(255),
-    incident_address VARCHAR(255),
+    location_address VARCHAR(255),
     zip_code INTEGER,
     city VARCHAR(255),
     borough VARCHAR(255),
