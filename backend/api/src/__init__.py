@@ -26,6 +26,15 @@ def create_app(database = 'three_one_one_development', testing = False, debug = 
         incident_dicts = [incident.__dict__ for incident in incidents]
         return json.dumps(incident_dicts, default = str)
 
+    @app.route('/boroughs')
+    def boroughs():
+        conn = db.get_db()
+        cursor = conn.cursor()
+
+        boroughs = models.Location.total_incidents_by_borough(cursor)
+        borough_dicts = [borough.__dict__ for borough in boroughs]
+        return json.dumps(borough_dicts, default = str)
+
     # @app.route('/agencies')
     # def agencies():
     #     conn = db.get_db()

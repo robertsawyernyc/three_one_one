@@ -14,7 +14,7 @@ class Location:
             setattr(self, k, v)
 
     @classmethod
-    def total_by_borough(self, cursor):
+    def total_incidents_by_borough(self, cursor):
         borough_query = """SELECT borough, COUNT(*) FROM locations 
         JOIN incidents ON locations.id = incidents.location_id
         GROUP BY borough"""
@@ -23,7 +23,7 @@ class Location:
         return records
 
     @classmethod    
-    def total_by_setting(self, cursor):
+    def total_incidents_by_setting(self, cursor):
         setting_query = """SELECT setting, COUNT(*) FROM locations 
         JOIN incidents ON locations.id = incidents.location_id
         GROUP BY setting"""
@@ -32,7 +32,7 @@ class Location:
         return records
 
     @classmethod
-    def total_by_zip_code(self, cursor):
+    def total_incidents_by_zip_code(self, cursor):
         zip_code_query = """SELECT zip_code, COUNT(*) FROM locations
         JOIN incidents ON locations.id = incidents.location_id
         GROUP BY zip_code"""

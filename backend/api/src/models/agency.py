@@ -40,13 +40,13 @@ class Agency:
         return record
 
     @classmethod
-    def get_agency_name(self, name, cursor):
+    def find_by_name(self, name, cursor):
         agency_name_query = """SELECT * FROM agencies
-        WHERE agency = %s"""
+        WHERE agency_name = %s"""
         cursor.execute(agency_name_query, (name,))
-        agency_name_record = cursor.fetchone()
-        agency_name = db.build_from_record(self, agency_name_record)
-        return agency_name
+        agency_record = cursor.fetchone()
+        agency = db.build_from_record(self, agency_record)
+        return agency
 
 #  id | agency |               agency_name               
 # ----+--------+-----------------------------------------
