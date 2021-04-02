@@ -6,15 +6,15 @@ import psycopg2
 
 class RequestAndBuild:
     def __init__(self):
-        self.client = adapters.Client()
-        self.builder = adapters.Builder()
+        self.client = adapters.Client() # from client.py
+        self.builder = adapters.Builder() # from incident_builder.py
         self.conn = psycopg2.connect(database = 'three_one_one_development', 
                 user = 'robertsawyer')
         self.cursor = self.conn.cursor()
 
     def run(self, begin_date, end_date, limit):
         incidents = self.client.request_incidents(begin_date, end_date, limit) #hit api and retrieve json files
-        open_data_ids = [incident['unique_key'] for incident in incidents]
+        open_data_ids = [incident['unique_key'] for incident in incidents] # gets all incidents
         incident_objs = []
         for open_data_id in open_data_ids:
             incident_details = self.client.request_incidents()
