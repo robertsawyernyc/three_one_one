@@ -22,21 +22,19 @@ class Location:
         records = cursor.fetchall()
         return records
 
-    # @classmethod
-    # def total_incidents_by_zip_code(self, cursor):
-    #     zip_code_query = """SELECT zip_code, COUNT(*) FROM locations
-    #     JOIN incidents ON locations.id = incidents.location_id
-    #     GROUP BY zip_code"""
-    #     cursor.execute(zip_code_query)
-    #     records = cursor.fetchall()
-    #     return records
+    def incidents(self, cursor):
+        query_str = "SELECT * FROM incidents WHERE id = %s"
+        cursor.execute(query_str, (self.venue_id,))
+        record = cursor.fetchone()
+        return db.build_from_record(models.Incident, record)
 
-    # @classmethod
-    # def total_incidents_by_borough(self, cursor):
-    #     borough_query = """SELECT borough, COUNT(*) FROM locations 
-    #     JOIN incidents ON locations.id = incidents.location_id
-    #     GROUP BY borough"""
-    #     cursor.execute(borough_query)
-    #     records = cursor.fetchall()
-    #     return records
+    def zipcode(self, cursor):
+        query_str = "SELECT * FROM zipcodes WHERE id = %s"
+        cursor.execute(query_str, (self.zipcode_id,))
+        record = cursor.fetchone()
+        return db.build_from_record(models.Zipcode, record)
+
+
+
+
 

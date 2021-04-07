@@ -13,8 +13,7 @@ class Builder:
         else:
             location = LocationBuilder().run(incident_details, conn, cursor)
             complaint = ComplaintBuilder().run(incident_details, conn, cursor)
-            agency = AgencyBuilder().run(incident_details, conn, cursor)
-            return {'incident': incident, 'location': location, 'complaint': complaint, 'agency': agency}
+            return {'incident': incident, 'location': location, 'complaint': complaint}
 
 
 class IncidentBuilder:
@@ -57,6 +56,29 @@ class LocationBuilder:
         location = db.save(location, conn, cursor)
         return location
 
+    def find_or_create_by_borough_zip(self, borough_name = 'N/A', code = None, conn = None, cursor = None):
+        if not borough_name: raise KeyError('must provide conn or cursor')
+        borough = db.find_by_name(models.Borough, borough_name, cursor)
+        zipcode = models.Zipcode.find_by_code(code, cursor)
+        if not borough:
+            borough = models.Borough(name = borough_name,)
+            borough = db.save(borough, conn, cursor)
+        if not zipcode:
+            zipcode = models.Zipcode(code = code, borough_id = borough.id)
+            zipcode = db.save(zipcode, conn, cursor)
+        return borough, zipcode
+
+    def build_location_borough_zip(self, location_attr, conn, cursor):
+        borough_name = location_attr.pop('borough', 'N/A')
+        code = location_attr.pop('incident_zip', None)
+        borough, zipcode = self.find_or_create_by_borough_zip(borough_name, code, conn, cursor)
+        location = models.Location(latitude = location_attr.get('latitude', None),
+                longitude = location_attr.get('longitude', None),
+                address = location_attr.get('incident_address', ''),
+                zipcode_id = zipcode.id
+                )
+        return location
+
 
 class ComplaintBuilder:
     def select_attributes(self, incident_details):
@@ -73,19 +95,3 @@ class ComplaintBuilder:
             named_complaint = db.total_by_complaint_type(models.Complaint, conn, cursor)
             type_of_complaints.append(named_complaint)
         return type_of_complaints
-        
-class AgencyBuilder:
-    attributes = ['agency', 'agency_name']
-
-    def select_attributes(self, incident_details):
-        agency = incident_details[0].get('agency', 'none')
-        agency_name = incident_details[0].get('agency_name', 'none')
-        return dict(zip(self.attributes, [agency, agency_name]))
-
-    def run(self, incident_details, conn, cursor):
-        location_attributes = self.select_attributes(incident_details)
-        location = models.Agency(**location_attributes)
-        location = db.save(agency, conn, cursor)
-        return agency 
-
-
