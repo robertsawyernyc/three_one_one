@@ -12,8 +12,16 @@ class Borough:
         for k, v in kwargs.items():
             setattr(self, k, v)
 
-    def zipcodes(self, cursor):
-        query_str = "SELECT zipcodes.* FROM zipcodes WHERE borough_id = %s"
-        cursor.execute(query_str, (self.id,))
-        records = cursor.fetchall()
-        return db.build_from_records(models.Zipcode, records)
+@classmethod
+def total_incidents_by_borough(self, cursor):
+    borough_query = """SELECT incident, COUNT(*) FROM incidents JOIN  
+    WHERE name = %s"""
+    cursor.execute(borough_query)
+    records = cursor.fetchall()
+    return records
+
+def zipcodes(self, cursor):
+    query_str = "SELECT zipcodes.* FROM zipcodes WHERE borough_id = %s"
+    cursor.execute(query_str, (self.id,))
+    records = cursor.fetchall()
+    return db.build_from_records(models.Zipcode, records)
